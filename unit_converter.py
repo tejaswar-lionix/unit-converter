@@ -54,3 +54,17 @@ def convert(value, from_unit, to_unit):
             return celsius_to_fahrenheit(value)
         return fahrenheit_to_celsius(value)
     raise ValueError(f"unsupported conversion: {from_unit} to {to_unit}")
+
+
+def parse_conversion(text):
+    """Parse text like '5 km -> m' into (5.0, 'km', 'm')."""
+    import re
+
+    match = re.fullmatch(
+        r"\s*(-?\d+(?:\.\d+)?)\s*([a-zA-Z]+)\s*(?:->|to)\s*([a-zA-Z]+)\s*",
+        text,
+    )
+    if not match:
+        raise ValueError("expected format: 5 km -> m")
+    value, source, target = match.groups()
+    return float(value), source.lower(), target.lower()

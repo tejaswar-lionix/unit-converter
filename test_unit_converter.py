@@ -35,5 +35,19 @@ class UnitTests(unittest.TestCase):
             convert_length(1, "mile", "m")
 
 
+class ParseTests(unittest.TestCase):
+    def test_parse_conversion_expression(self):
+        from unit_converter import parse_conversion
+
+        self.assertEqual(parse_conversion("5 km -> m"), (5.0, "km", "m"))
+        self.assertEqual(parse_conversion("  12.5 KG to lb "), (12.5, "kg", "lb"))
+
+    def test_parse_rejects_garbage(self):
+        from unit_converter import parse_conversion
+
+        with self.assertRaises(ValueError):
+            parse_conversion("five km to m")
+
+
 if __name__ == "__main__":
     unittest.main()
