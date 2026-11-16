@@ -5,6 +5,7 @@ from unit_converter import (
     convert,
     convert_length,
     convert_many,
+    convert_volume,
     convert_weight,
     fahrenheit_to_celsius,
 )
@@ -23,9 +24,18 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(celsius_to_fahrenheit(100), 212.0)
         self.assertEqual(fahrenheit_to_celsius(32), 0.0)
 
+    def test_volume_conversion(self):
+        self.assertEqual(convert_volume(1, "l", "ml"), 1000.0)
+        self.assertAlmostEqual(convert_volume(1, "gal", "l"), 3.785412, places=6)
+
+    def test_unknown_volume_unit_raises(self):
+        with self.assertRaises(ValueError):
+            convert_volume(1, "pint", "l")
+
     def test_dispatch(self):
         self.assertEqual(convert(5, "KM", "M"), 5000.0)
         self.assertEqual(convert(0, "c", "f"), 32.0)
+        self.assertEqual(convert(1, "L", "ML"), 1000.0)
 
     def test_unknown_units_raise(self):
         with self.assertRaises(ValueError):
