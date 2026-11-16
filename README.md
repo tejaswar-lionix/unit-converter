@@ -1,18 +1,20 @@
 # unit-converter
 
-Convert length, weight, volume, and temperature values.
+Convert length, weight, volume, speed, and temperature values.
 
 ## Usage
 
 ```bash
 python3 -c "from unit_converter import convert; print(convert(5, 'km', 'm'))"
 python3 -c "from unit_converter import convert; print(convert(1, 'gal', 'l'))"
+python3 -c "from unit_converter import convert; print(convert(1, 'mph', 'kmh'))"
 python3 -c "from unit_converter import convert_many; print(convert_many('5 km -> m\n1 kg to lb'))"
 ```
 
 ## Features
 
 - Length, weight, and volume conversion with validation
+- Speed conversion across m/s, km/h, mph, and knots
 - Celsius and Fahrenheit conversion
 - Expression parsing with parse_conversion('5 km -> m')
 - Batch conversion with convert_many('5 km -> m\n1 kg to lb')

@@ -21,6 +21,12 @@ VOLUME_FACTORS = {
     "gal": 3.785411784,
     "floz": 0.0295735295625,
 }
+SPEED_FACTORS = {
+    "ms": 1.0,
+    "kmh": 0.2777777778,
+    "mph": 0.44704,
+    "kn": 0.5144444444,
+}
 
 
 def convert_length(value, from_unit, to_unit):
@@ -47,6 +53,14 @@ def convert_volume(value, from_unit, to_unit):
     return round(value * VOLUME_FACTORS[from_unit] / VOLUME_FACTORS[to_unit], 6)
 
 
+def convert_speed(value, from_unit, to_unit):
+    if from_unit not in SPEED_FACTORS:
+        raise ValueError(f"unknown speed unit: {from_unit}")
+    if to_unit not in SPEED_FACTORS:
+        raise ValueError(f"unknown speed unit: {to_unit}")
+    return round(value * SPEED_FACTORS[from_unit] / SPEED_FACTORS[to_unit], 6)
+
+
 def celsius_to_fahrenheit(value):
     return round(value * 9 / 5 + 32, 2)
 
@@ -64,6 +78,8 @@ def convert(value, from_unit, to_unit):
         return convert_weight(value, source, target)
     if source in VOLUME_FACTORS and target in VOLUME_FACTORS:
         return convert_volume(value, source, target)
+    if source in SPEED_FACTORS and target in SPEED_FACTORS:
+        return convert_speed(value, source, target)
     if {source, target} <= {"c", "f"}:
         if source == target:
             return round(float(value), 2)
