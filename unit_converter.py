@@ -14,6 +14,13 @@ WEIGHT_FACTORS = {
     "lb": 0.45359237,
     "oz": 0.028349523125,
 }
+VOLUME_FACTORS = {
+    "ml": 0.001,
+    "l": 1.0,
+    "cup": 0.2365882365,
+    "gal": 3.785411784,
+    "floz": 0.0295735295625,
+}
 
 
 def convert_length(value, from_unit, to_unit):
@@ -32,6 +39,14 @@ def convert_weight(value, from_unit, to_unit):
     return round(value * WEIGHT_FACTORS[from_unit] / WEIGHT_FACTORS[to_unit], 6)
 
 
+def convert_volume(value, from_unit, to_unit):
+    if from_unit not in VOLUME_FACTORS:
+        raise ValueError(f"unknown volume unit: {from_unit}")
+    if to_unit not in VOLUME_FACTORS:
+        raise ValueError(f"unknown volume unit: {to_unit}")
+    return round(value * VOLUME_FACTORS[from_unit] / VOLUME_FACTORS[to_unit], 6)
+
+
 def celsius_to_fahrenheit(value):
     return round(value * 9 / 5 + 32, 2)
 
@@ -47,6 +62,8 @@ def convert(value, from_unit, to_unit):
         return convert_length(value, source, target)
     if source in WEIGHT_FACTORS and target in WEIGHT_FACTORS:
         return convert_weight(value, source, target)
+    if source in VOLUME_FACTORS and target in VOLUME_FACTORS:
+        return convert_volume(value, source, target)
     if {source, target} <= {"c", "f"}:
         if source == target:
             return round(float(value), 2)
