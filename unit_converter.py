@@ -68,3 +68,22 @@ def parse_conversion(text):
         raise ValueError("expected format: 5 km -> m")
     value, source, target = match.groups()
     return float(value), source.lower(), target.lower()
+
+
+def convert_many(text):
+    """Convert newline-separated expressions into a list of result dictionaries."""
+    results = []
+    for line in text.splitlines():
+        if not line.strip():
+            continue
+        value, source, target = parse_conversion(line)
+        results.append(
+            {
+                "input": line,
+                "value": value,
+                "from": source,
+                "to": target,
+                "result": convert(value, source, target),
+            }
+        )
+    return results
