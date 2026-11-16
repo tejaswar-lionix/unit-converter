@@ -5,6 +5,7 @@ from unit_converter import (
     convert,
     convert_length,
     convert_many,
+    convert_speed,
     convert_volume,
     convert_weight,
     fahrenheit_to_celsius,
@@ -31,6 +32,19 @@ class UnitTests(unittest.TestCase):
     def test_unknown_volume_unit_raises(self):
         with self.assertRaises(ValueError):
             convert_volume(1, "pint", "l")
+
+    def test_speed_conversion(self):
+        self.assertAlmostEqual(convert_speed(1, "kmh", "ms"), 0.277778, places=6)
+        self.assertAlmostEqual(convert_speed(1, "mph", "kmh"), 1.609344, places=6)
+        self.assertEqual(convert_speed(10, "ms", "ms"), 10.0)
+
+    def test_unknown_speed_unit_raises(self):
+        with self.assertRaises(ValueError):
+            convert_speed(1, "mph", "warp")
+
+    def test_speed_dispatch(self):
+        self.assertAlmostEqual(convert(1, "KMH", "MS"), 0.277778, places=6)
+        self.assertAlmostEqual(convert(1, "MPH", "KMH"), 1.609344, places=6)
 
     def test_dispatch(self):
         self.assertEqual(convert(5, "KM", "M"), 5000.0)
