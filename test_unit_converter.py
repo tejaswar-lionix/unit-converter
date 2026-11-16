@@ -4,6 +4,7 @@ from unit_converter import (
     celsius_to_fahrenheit,
     convert,
     convert_length,
+    convert_many,
     convert_weight,
     fahrenheit_to_celsius,
 )
@@ -47,6 +48,31 @@ class ParseTests(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             parse_conversion("five km to m")
+
+
+class ConvertManyTests(unittest.TestCase):
+    def test_converts_multiple_lines(self):
+        results = convert_many("5 km -> m\n100 cm to m")
+        self.assertEqual(len(results), 2)
+        self.assertEqual(
+            results[0],
+            {
+                "input": "5 km -> m",
+                "value": 5.0,
+                "from": "km",
+                "to": "m",
+                "result": 5000.0,
+            },
+        )
+        self.assertEqual(results[1]["result"], 1.0)
+
+    def test_blank_lines_are_skipped(self):
+        results = convert_many("5 km -> m\n\n   \n1 kg to lb\n")
+        self.assertEqual([item["input"] for item in results], ["5 km -> m", "1 kg to lb"])
+
+    def test_invalid_line_raises(self):
+        with self.assertRaises(ValueError):
+            convert_many("5 km -> m\nnot a conversion")
 
 
 if __name__ == "__main__":
