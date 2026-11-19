@@ -89,6 +89,11 @@ def convert(value, from_unit, to_unit):
     raise ValueError(f"unsupported conversion: {from_unit} to {to_unit}")
 
 
+def format_conversion(value, from_unit, to_unit):
+    result = convert(value, from_unit, to_unit)
+    return f"{value} {from_unit} = {result} {to_unit}"
+
+
 def parse_conversion(text):
     """Parse text like '5 km -> m' into (5.0, 'km', 'm')."""
     import re
