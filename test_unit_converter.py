@@ -9,6 +9,7 @@ from unit_converter import (
     convert_volume,
     convert_weight,
     fahrenheit_to_celsius,
+    format_conversion,
 )
 
 
@@ -58,6 +59,16 @@ class UnitTests(unittest.TestCase):
     def test_unknown_single_unit_raises(self):
         with self.assertRaises(ValueError):
             convert_length(1, "mile", "m")
+
+    def test_format_conversion(self):
+        self.assertEqual(format_conversion(5, "km", "m"), "5 km = 5000.0 m")
+
+    def test_format_temperature_conversion(self):
+        self.assertEqual(format_conversion(100, "c", "f"), "100 c = 212.0 f")
+
+    def test_format_unknown_units_raise(self):
+        with self.assertRaises(ValueError):
+            format_conversion(1, "m", "kg")
 
 
 class ParseTests(unittest.TestCase):
