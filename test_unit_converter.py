@@ -110,5 +110,21 @@ class ConvertManyTests(unittest.TestCase):
             convert_many("5 km -> m\nnot a conversion")
 
 
+class ListUnitsTests(unittest.TestCase):
+    def test_lists_supported_units(self):
+        from unit_converter import list_units
+
+        units = list_units()
+        self.assertIn("m", units["length"])
+        self.assertIn("kg", units["weight"])
+        self.assertEqual(units["temperature"], ["c", "f"])
+
+    def test_units_are_sorted(self):
+        from unit_converter import list_units
+
+        units = list_units()
+        self.assertEqual(units["length"], sorted(units["length"]))
+
+
 if __name__ == "__main__":
     unittest.main()
