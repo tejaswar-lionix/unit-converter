@@ -125,3 +125,14 @@ def convert_many(text):
             }
         )
     return results
+
+
+def list_units():
+    """Return the supported units grouped by measurement category."""
+    return {
+        "length": sorted(LENGTH_FACTORS),
+        "weight": sorted(WEIGHT_FACTORS),
+        "volume": sorted(VOLUME_FACTORS),
+        "speed": sorted(SPEED_FACTORS),
+        "temperature": ["c", "f"],
+    }

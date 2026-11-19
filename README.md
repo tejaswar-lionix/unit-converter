@@ -27,6 +27,10 @@ python3 -c "from unit_converter import convert_many; print(convert_many('5 km ->
 python3 -m unittest -q
 ```
 
+## Additional API
+
+- `list_units()` returns the supported units grouped by measurement category.
+
 ## License
 
 MIT
